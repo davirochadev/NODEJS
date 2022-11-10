@@ -8,6 +8,11 @@ const port = 3000; // porta de acesso ao servidor
 const basePath = path.join(__dirname, 'templates');
 
 
+app.get('/produto/:id', (requisicao, resposta) => {
+    const idProduto = requisicao.params.id;
+    console.log('Resgatei o produto de ID: ', idProduto);
+})
+
 const checarAutenticacao = function (req, res, next) {
     req.authStatus = true;
 
