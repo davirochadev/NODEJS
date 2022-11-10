@@ -4,7 +4,7 @@ var con = mysql.createConnection({
   host: "localhost",
   port: "3306",
   user: "root",
-  password: "D@vi13032014",
+  password: "",
   database: "db_senai"
 });
 
