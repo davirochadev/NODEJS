@@ -16,6 +16,8 @@ app.use(
 
 app.use(express.json());
 
+app.use(express.static('public'));
+
 const home = require('./home');
 const users = require('./users');
 const hunches = require('./hunches');
@@ -25,9 +27,3 @@ app.use('/home', home);
 app.use('/users', users);
 app.use('/hunches', hunches);
 app.use('/games', games);
-
-
-
-
-
-
