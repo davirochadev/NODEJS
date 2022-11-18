@@ -1,0 +1,43 @@
+
+<form action="/usuario/save" method="post">
+    <label>Nome</label>
+    <input type="text" name="nome" />
+    <br>
+    <br>
+    <label>Endereço</label>
+    <input type="text" name="endereco" />
+    <br>
+    <br>
+    <label>E-mail</label>
+    <input type="email" name="email" />
+    <br>
+    <br>
+    <label>Data de Nascimento</label>
+    <input type="date" name="dataNascimento" />
+    <br>
+    <br>
+    <input type="submit" value="Cadastrar" />
+</form>
+<hr>
+<h1>Lista de Usuários</h1>
+
+<table border="1px" >
+         <tr>
+            <th>Id Usuáro</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>E-mail</th>
+            <th>Data Nascimento</th>
+        </tr>
+        {{#each usuarios}}
+        <tr>
+            <td>{{this.id_usuario}}</td>
+            <td>{{this.nome_usuario}}</td>
+            <td>{{this.endereco_usuario}}</td>
+            <td>{{this.email_usuario}}</td>
+            <td>{{this.data_nascimento_usuario}}</td>
+        </tr>
+        {{/each}}
+</table>
+
+

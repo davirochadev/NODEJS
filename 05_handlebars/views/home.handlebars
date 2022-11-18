@@ -1,0 +1,7 @@
+{{#if usuarioLogado}}
+    <h1>Seja bem-vindo {{ usuario.nome }}!</h1>
+    <p>Email: {{ usuario.email }} | Data de Nascimento: {{ usuario.dataNascimento }}</p>
+{{else}}
+    <h1>Faça seu Login</h1>
+{{/if}}
+<hr>
