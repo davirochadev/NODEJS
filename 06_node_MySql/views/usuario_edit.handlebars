@@ -1,0 +1,25 @@
+<h2>Editando Usuário</h2>
+
+<form action="/usuario/edit/save" method="post">
+    <label>Id</label>
+    <input type="hidden" name="id_usuario" value = "{{usuario.id_usuario}}"/>
+    <br>
+    <br>
+    <label>Nome</label>
+    <input type="text" name="nome" value = "{{usuario.nome_usuario}}"/>
+    <br>
+    <br>
+    <label>Endereço</label>
+    <input type="text" name="endereco" value = "{{usuario.endereco_usuario}}"/>
+    <br>
+    <br>
+    <label>E-mail</label>
+    <input type="email" name="email" value = "{{usuario.email_usuario}}"/>
+    <br>
+    <br>
+    <label>Data de Nascimento</label>
+    <input type="date" name="dataNascimento" value = "{{usuario.data_nascimento_usuario}}"/>
+    <br>
+    <br>
+    <input type="submit" value="Atualizar" />
+</form>

@@ -31,6 +31,90 @@ app.get('/usuarios', (req, res) => {
        });  
 });
 
+
+//Rota para exibir detalhes do usuario
+app.get('/usuario/:id', (req, res) => {
+    const id = req.params.id;
+    
+    const sql = `SELECT id_usuario, 
+                        nome_usuario, 
+                        endereco_usuario, 
+                        email_usuario, 
+                        data_nascimento_usuario
+                        from usuario WHERE id_usuario = ${id}`;
+
+    conn.query(sql, (erro, dados) => {
+        if(erro) {
+            console.log(erro);
+            return;
+        };
+        const usuario = dados[0];
+        
+        res.render('usuario', {usuario});
+    })
+}); 
+
+//Rota para deletar um usuário
+app.get('/usuario/delete/:id', (req, res) => {
+    const id = req.params.id;
+
+    const sql = `DELETE from usuario WHERE id_usuario = ${id}`;
+
+    conn.query(sql, (erro) => {
+        if(erro) {
+            console.log(erro);
+            return;
+        };
+
+        res.redirect('/usuarios');
+    });
+});
+
+app.get('/usuario/edit/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `SELECT id_usuario, 
+                        nome_usuario, 
+                        endereco_usuario, 
+                        email_usuario, 
+                        data_nascimento_usuario
+                        from usuario WHERE id_usuario = ${id}`;
+
+    conn.query(sql, (erro, dados) => {
+        if(erro) {
+            console.log(erro);
+            return;
+        };
+        const usuario = dados[0];
+        
+        res.render('usuario_edit', {usuario});
+    });
+});
+
+app.post('/usuario/edit/save', (req, res) => {
+    const id = req.body.id_usuario;
+    const nome = req.body.nome;
+    const endereco = req.body.endereco;
+    const email = req.body.email;
+    const dataNascimento = req.body.dataNascimento;
+
+    const sql = `UPDATE usuario 
+                set nome_usuario = '${nome}',
+                endereco_usuario = '${endereco}',
+                email_usuario = '${email}',
+                data_nascimento_usuario = '${dataNascimento}'
+                where id_usuario = ${id}`; 
+
+     conn.query(sql, (erro) => {
+        if(erro) {
+            console.log(erro);
+            return;
+        };
+        
+        res.redirect(`/usuario/${id}`);
+    });       
+});
+
+
 app.post('/usuario/save', (req, res) => {
     const nome = req.body.nome;
     const endereco = req.body.endereco;
@@ -62,6 +146,7 @@ app.get('/clientes', (req, res) => {
         res.render('clientes', {clientes});
        }); 
 });
+
 
 app.post('/cliente/save', (req, res) => {
     const nome = req.body.nome;
