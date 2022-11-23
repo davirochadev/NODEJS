@@ -1,8 +1,8 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-const mysql = require('mysql');
+// const mysql = require('mysql');  Não é mais necessário utilizando o Pool
 const app = express();
-
+const conn = require('./db/conn'); //Conexão Pool MySql
 
 
 app.engine('handlebars', exphbs.engine());
@@ -172,24 +172,14 @@ app.get('/', (req, res) => {
 });
 
 //Conexão com o banco
-const conn = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: '',
-    database:'db_comum'
+// const conn = mysql.createConnection({
+//     host: 'localhost',
+//     port: 3306,
+//     user: 'root',
+//     password: '',
+//     database:'db_comum'
+// });
+
+app.listen(3000, () => {
+    console.log("Aplicação rodando na porta 3000");
 });
-
-conn.connect((erro) => {
-    if(erro) {
-        console.log(erro);
-        return;
-    }
-    console.log("Conectou ao banco db_comum");
-
-    app.listen(3000, () => {
-        console.log("Aplicação rodando na porta 3000");
-    });
-});
-
-
