@@ -1,0 +1,48 @@
+const express   = require('express');
+const exphbs    = require('express-handlebars');
+const conn      = require('./db/conn');
+const app       = express();
+
+const Clube = require('./models/Clube');
+
+app.engine('handlebars', exphbs.engine());
+app.set('view engine', 'handlebars');
+
+//Middlewares para os formulários
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(express.json());
+
+//Rota principal
+app.get('/', (req, res) => {
+    res.render('home');
+});
+
+//Rota dos clubes
+app.get('/clubes', (req, res) => {
+    res.render('clubes');
+});
+
+app.post('/clube/save', async (req, res) => {
+    const nome = req.body.nome;
+    let status = req.body.status;
+
+    if(status === 'on') {
+        status = true;
+    } else {
+        status = false;
+    }
+
+    await Clube.create({nome, status});
+
+    res.redirect('/clubes');
+});
+
+//Criando a conexão
+conn.sync().then(() => {
+    app.listen(3000);
+}).catch((erro) => {
+    console.log(erro);
+});
+
