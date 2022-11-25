@@ -1,0 +1,15 @@
+<a href="/clubes">Voltar para lista de Clubes</a>
+{{#with clube}}
+<h1>Detalhes do clube {{nome}}</h1>
+<ul>
+    <li>Id do Clube: {{id}}</li>
+    <li>Nome do Clube: {{nome}}</li>
+    {{#if status}}
+    <li>Status: Ativo</li>
+    {{else}}
+    <li>Status: Inativo</li>
+    {{/if}}
+    <li>Criado em: {{createdAt}}</li>
+    <li>Atualizado em: {{updatedAt}}</li>
+</ul>
+{{/with}}
