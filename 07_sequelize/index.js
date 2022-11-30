@@ -4,6 +4,7 @@ const conn      = require('./db/conn');
 const app       = express();
 
 const Clube = require('./models/Clube');
+const Endereco = require('./models/Endereco');
 
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
@@ -33,9 +34,9 @@ app.get('/clube/:id', async (req, res) => {
 
     const id = req.params.id;
 
-    const clube = await Clube.findOne({raw: true, where: {id: id}});
+    const clube = await Clube.findOne({include: Endereco, where: {id: id}});
 
-    res.render('clube', {clube});
+    res.render('clube', {clube: clube.get({plain: true})});
 });
 
 
@@ -81,8 +82,38 @@ app.post('/clube/edit/save', async (req, res) => {
     res.redirect('/clubes');
 });
 
+
+//Rotas do endereço
+
+app.post('/endereco/save', async (req, res) => {
+    const ClubeId = req.body.ClubeId;
+    const logradouro = req.body.logradouro;
+    const cep = req.body.cep;
+    const numero = req.body.numero;
+    const complemento = req.body.complemento;
+
+    const enderecoNovo = {logradouro, cep, numero, complemento, ClubeId};
+    
+    await Endereco.create(enderecoNovo);
+
+    res.redirect(`/clube/${ClubeId}`);    
+});
+
+app.get('/endereco/delete/:idClube/:idEndereco', async (req, res) => {
+    
+    const idClube = req.params.idClube;
+    const idEndereco = req.params.idEndereco;
+    
+    await Endereco.destroy({where: {id: idEndereco}});
+
+    res.redirect(`/clube/${idClube}`);
+
+})
+
 //Criando a conexão
-conn.sync().then(() => {
+conn
+//.sinc({force: true})
+.sync().then(() => {
     app.listen(3000);
 }).catch((erro) => {
     console.log(erro);

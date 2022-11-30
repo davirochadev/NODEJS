@@ -13,3 +13,48 @@
     <li>Atualizado em: {{updatedAt}}</li>
 </ul>
 {{/with}}
+
+<hr>
+<h2>Cadastrar Endereço</h2>
+
+<form action="/endereco/save" method="post">
+    <label>Logradouro: </label>
+    <input type="text" name="logradouro" placeholder="Digite o Lograduro">
+    <br>
+    <label>CEP: </label>
+    <input type="text" name="cep" placeholder="Digite o CEP">
+    <br>
+    <label>Numero: </label>
+    <input type="text" name="numero" placeholder="Digite o Numero">
+    <br>
+    <label>Complemento: </label>
+    <input type="text" name="complemento" placeholder="Digite o CEP">
+    <br>
+    <input type="hidden" name="ClubeId" value="{{clube.id}}">
+    <input type="submit" value="Cadastrar Endereço">
+</form>
+<hr>
+
+<h2>Lista de Endereços do Clube</h2>
+<table border="1">
+    <tr>
+        <th>#</th>
+        <th>Logradouro</th>
+        <th>CEP</th>
+        <th>Número</th>
+        <th>Complemento</th>
+        <th>Ações</th>
+    </tr>
+    {{#each clube.Enderecos}}
+    <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.logradouro}}</td>
+        <td>{{this.cep}}</td>
+        <td>{{this.numero}}</td>
+        <td>{{this.complemento}}</td>
+        <td>
+            <a href="/endereco/delete/{{this.ClubeId}}/{{this.id}}">Excluir</a>
+        </td>
+    </tr>
+    {{/each}}
+</table>
