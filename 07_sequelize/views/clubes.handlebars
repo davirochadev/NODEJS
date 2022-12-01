@@ -4,7 +4,7 @@
 <hr>
 
 <form action="/clube/save" method="post">
-    <input type="text" name="nome" placeholder="Digite o nome do Clube">
+    <input type="text" name="nome" placeholder="Digite o nome do Clube" required>
     <br>
     <label>Status: </label>
     <input type="checkbox" name="status" checked>
@@ -12,3 +12,24 @@
     <br>
     <input type="submit" value="Cadastrar">
 </form>
+<hr>
+<h2>Lista de Clubes</h2>
+<table border="1">
+    <tr>
+        <th>Id Clube</th>
+        <th>Nome do Clube</th>
+        <th>Status do Clube</th>
+        <th>Ações</th>
+    </tr>
+
+    {{#each clubes}}
+    <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.nome}}</td>
+        <td>{{#if this.status}} Ativo {{else}} Inativo {{/if}}</td>
+        <td><a href="/clube/{{this.id}}">Exibir Detalhes</a>
+        | <a href="/clube/edit/{{this.id}}">Editar Registro</a>
+        | <a href="/clube/delete/{{this.id}}">Excluir Registro</a></td>
+    </tr>
+    {{/each}}
+</table>
