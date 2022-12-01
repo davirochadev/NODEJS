@@ -13,7 +13,6 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded({
     extended: true
 }));
-
 app.use(express.json());
 
 //Rota principal
@@ -21,7 +20,9 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
+
 //Rota dos clubes
+//Apresentação dos clubes cadastrados
 app.get('/clubes', async (req, res) => {
 
     const clubes = await Clube.findAll({raw: true});
@@ -29,7 +30,7 @@ app.get('/clubes', async (req, res) => {
 
     res.render('clubes', {clubes});
 });
-
+//Exibição dos detalhes de um clube específico
 app.get('/clube/:id', async (req, res) => {
 
     const id = req.params.id;
@@ -38,8 +39,7 @@ app.get('/clube/:id', async (req, res) => {
 
     res.render('clube', {clube: clube.get({plain: true})});
 });
-
-
+//Cadastro de um novo clube
 app.post('/clube/save', async (req, res) => {
     const nome = req.body.nome;
     let status = req.body.status;
@@ -49,19 +49,16 @@ app.post('/clube/save', async (req, res) => {
     } else {
         status = false;
     }
-
     await Clube.create({nome, status});
-
     res.redirect('/clubes');
 });
-
+//Exclusão de um clube da lista
 app.get('/clube/delete/:id', async (req, res) => {
     const id = req.params.id;
-
     await Clube.destroy({where: {id: id}});
-
     res.redirect('/clubes');
 });
+
 
 app.get('/clube/edit/:id', async (req, res) => {
     const id = req.params.id;
@@ -71,6 +68,7 @@ app.get('/clube/edit/:id', async (req, res) => {
     res.render('clube-edit', {clube});
 });
 
+//Edição de um clube da lista
 app.post('/clube/edit/save', async (req, res) => {
     const id = req.body.id;
     const nome = req.body.nome;
@@ -108,7 +106,7 @@ app.get('/endereco/delete/:idClube/:idEndereco', async (req, res) => {
 
     res.redirect(`/clube/${idClube}`);
 
-})
+});
 
 //Criando a conexão
 conn
